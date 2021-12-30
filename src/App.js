@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-
+import GridList from "./components/GridList";
+import PokemonCard from "./components/PokemonItem";
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,20 +32,28 @@ function App() {
   }
   return (
     <div className="App">
-      <main>
-        <ul>
-          {pokemons.map(({ name, image }, index) => (
-            <li key={index}>
-              <span>{name}</span>
-              <div>
+      <main
+        style={{
+          display: "flex",
+          margin: "0 auto",
+          maxWidth: "60vw",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <GridList>
+          {pokemons.map(({ name }, index) => (
+            <PokemonCard key={index}>
+              <div style={{ maxHeight: "100%", maxWidth: "100%" }}>
                 <img
                   src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`}
                   alt={`${name}'s visual depiction`}
                 />
               </div>
-            </li>
+              <span>{name}</span>
+            </PokemonCard>
           ))}
-        </ul>
+        </GridList>
       </main>
     </div>
   );
