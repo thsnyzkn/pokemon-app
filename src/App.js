@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import GridList from "./components/GridList";
-import PokemonCard from "./components/PokemonItem";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/ui/Layout";
+import PokemonList from "./pages/PokemonList.page";
+import PokemonDetail from "./pages/PokemanDetail.page";
 function App() {
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -24,6 +26,7 @@ function App() {
     }
     fetchData();
   }, []);
+
   if (loading) {
     <div>Loading...</div>;
   }
@@ -31,31 +34,18 @@ function App() {
     <div>Error occurred..</div>;
   }
   return (
-    <div className="App">
-      <main
-        style={{
-          display: "flex",
-          margin: "0 auto",
-          maxWidth: "60vw",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <GridList>
-          {pokemons.map(({ name }, index) => (
-            <PokemonCard key={index}>
-              <div style={{ maxHeight: "100%", maxWidth: "100%" }}>
-                <img
-                  src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${name}.gif`}
-                  alt={`${name}'s visual depiction`}
-                />
-              </div>
-              <span>{name}</span>
-            </PokemonCard>
-          ))}
-        </GridList>
-      </main>
-    </div>
+    <Layout>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Navigate to="/pokemon" />} />
+          <Route
+            path="/pokemon"
+            element={<PokemonList pokemons={pokemons} />}
+          />
+          <Route path="pokemon/:name" element={<PokemonDetail />} />
+        </Routes>
+      </BrowserRouter>
+    </Layout>
   );
 }
 
