@@ -33,7 +33,7 @@ const PokemonListPage = () => {
           id="filter"
           value={filter}
           name="filter"
-          onChange={(e) => setFilter(e.target.value)}
+          onChange={(e) => setFilter(e.target.value.toLocaleLowerCase())}
         />
         <RectangleButton onClick={() => navigate("/favorites")}>
           ➡Favorites
